@@ -1,16 +1,10 @@
-CC = /usr/bin/gcc
+CC = /usr/bin/g++
 
-SRCS = ./src/display.c \
-	   ./src/mandel.c \
-	   ./src/complex.c \
-	   ./src/linear.c 
+SRCS = ./src/main.C \
 
-OBS  = ./src/display.o \
-	   ./src/mandel.o \
-	   ./src/complex.o \
-	   ./src/linear.o
+OBS  = ./src/main.o \
 
-INC = ./src/structs.h
+#INC = ./src/structs.h
 
 TARGET = mandel
 
@@ -18,9 +12,9 @@ TARGET = mandel
 CFLAGS = -I$(INC) -pedantic -Wall -pedantic-errors \
 		 -Wunused-command-line-argument -Wimplicit-function-declaration 
 
-CPPFLAGS = -I/opt/X11/include -L/usr/X11R6/lib
+CPPFLAGS = -lSDL2main -lSDL2
 
-LIBS = -lX11 #-DUSE_SYSCTL_HW_MEMSIZE
+LIBS = #-lX11 #-DUSE_SYSCTL_HW_MEMSIZE
 
 $(TARGET): $(OBJS)
 	$(CC) -g -o $(TARGET) $(SRCS) $(LIBS) $(CFLAGS) $(CPPFLAGS) $(OBJS) 
