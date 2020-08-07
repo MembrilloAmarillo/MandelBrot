@@ -5,10 +5,15 @@
 #include <limits.h>
 #include <math.h>
 #include <pthread.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <unistd.h>
 
 #include "structs.h"
 
 #define msg "Esto es una prueba\n"
+
+static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 
 Display* show_display( Window *w, int* s);
 
@@ -22,10 +27,15 @@ int main (int argc, char *argv[]) {
   int s;
   dsp = show_display(&w, &s);
   
+  struct parameters* p = NULL;
+
   if (dsp == NULL) {
 	fprintf(stderr, "ERROR: pointer to dsp failed\n");
 	exit(0);
   }
+
+  pthread_t thread;
+ // pthread_create(&thread, NULL, linear, p);
   
   while(1) {
 	XNextEvent(dsp, &e);

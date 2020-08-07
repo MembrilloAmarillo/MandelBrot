@@ -1,5 +1,6 @@
 #include <math.h>
 #include <limits.h>
+#include <stdio.h>
 
 #include "structs.h"
 
@@ -22,7 +23,10 @@ void linear ( long double *x, long double *z,
   *x = intersection_x ( &p );
   *z = correspondence_z ( &p );
   *c = correspondence_c ( &p );
-
+	
+  printf("x value : %LF\n", *x);
+  printf("z value : %LF\n", *z);
+  printf("c value : %LF\n", *c);
   non_set ( &p );
 
 }
