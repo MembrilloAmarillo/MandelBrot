@@ -5,16 +5,19 @@
 
 #include <iostream>
 
-using namespace::std;
+#include "display.h"
 
-int Display::GetInstance();
-int Display::Execute(int argc, char *argv[]);
+using namespace std;
 
-int main (int argc, char *argv[]) {
+int initialize ( int argc, char *argv[] );
+
+int main ( int argc, char *argv[] ) {
 	
-	Display::GetInstance()->Execute(argc, argv);
-
-	while(1);
-
+	initialize(argc, argv);
+	
 	return EXIT_SUCCESS;
+}
+
+int initialize ( int argc, char *argv[] ) {
+	return Display::GetInstance()->Execute( argc, argv );	
 }

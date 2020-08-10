@@ -1,33 +1,45 @@
 CC = /usr/bin/g++
 
-SRCS = ./src/main.cpp \
-	   ./src/linear.cpp \
-	   ./src/display.cpp
+OBJ_DIR = ./obj/
+SRC_DIR = ./src/
 
-OBS  = ./src/main.o \
-	   ./src/linear.o \
-	   ./src/display.o
+SRC = 	$(SRC_DIR)main.cpp \
+		$(SRC_DIR)linear.cpp \
+	   	$(SRC_DIR)display.cpp
 
-INC = ./src/structs.h \
-	  ./src/log.h
+OBJ  = $(OBJ_DIR)main.o \
+	   $(OBJ_DIR)linear.o \
+	   $(OBJ_DIR)display.o
 
+INC = $(SRC_DIR)structs.h \
+	  $(SRC_DIR)log.h \
+	  $(SRC_DIR)display.h \
+	  $(SRC_DIR)log.h
+			
 TARGET = mandel
 
+WARNINGS = 	-pedantic -Wall -pedantic-errors \
+		 	-Wunused-command-line-argument -Wimplicit-function-declaration \
+		 	-Wdeprecated 
 
-CFLAGS = -std=c++11 -I$(INC) -pedantic -Wall -pedantic-errors \
-		 -Wunused-command-line-argument -Wimplicit-function-declaration \
-		 -Wdeprecated
+CFLAGS = -I$(INC) -02 $(WARNINGS) -g
 
 CPPFLAGS = -lSDL2main -lSDL2
 
-LIBS = #-lX11 #-DUSE_SYSCTL_HW_MEMSIZE
+#LIBS = -lX11 -DUSE_SYSCTL_HW_MEMSIZE
 
-$(TARGET): $(OBJS)
-	$(CC) -g -o $(TARGET) $(SRCS) $(LIBS) $(CFLAGS) $(CPPFLAGS) $(OBJS) 
-%.o: %.c
-	$(CC) -g -c $(CFLAGS) $(CPPFLAGS) $< -o $@ $(LIBS)
+$(OBJ_DIR)%.o : $(SRC_DIR)%.c
+	$(CC) -c -MD $(CFLAGS) $(CPPFLAGS) $< -o $@
 
+$(TARGET) : $(OBJ)
+	$(CC) $(CFLAGS) $(CPPFLAGS) -o $@ $(OBJ) 
 
 .PHONY: clean
 clean:
-	@rm -rf $(OBJS) xmand.o $(TARGET) *.dSYM
+	@rm -rf $(OBJ_DIR) xmand.o $(TARGET) *.dSYM
+
+# NO TOCAR ESTAS LINEAS PORFA PLIS #
+
+$(OBJ_DIR)main.o    : main.cpp linear.cpp display.cpp display.h
+$(OBJ_DIR)linear.o  : linear.cpp display.cpp display.h
+$(OBJ_DIR)display.o : display.cpp linear.cpp display.h log.h
