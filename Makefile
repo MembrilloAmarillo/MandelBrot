@@ -1,16 +1,22 @@
 CC = /usr/bin/g++
 
-SRCS = ./src/main.C \
+SRCS = ./src/main.cpp \
+	   ./src/linear.cpp \
+	   ./src/display.cpp
 
 OBS  = ./src/main.o \
+	   ./src/linear.o \
+	   ./src/display.o
 
-#INC = ./src/structs.h
+INC = ./src/structs.h \
+	  ./src/log.h
 
 TARGET = mandel
 
 
-CFLAGS = -I$(INC) -pedantic -Wall -pedantic-errors \
-		 -Wunused-command-line-argument -Wimplicit-function-declaration 
+CFLAGS = -std=c++11 -I$(INC) -pedantic -Wall -pedantic-errors \
+		 -Wunused-command-line-argument -Wimplicit-function-declaration \
+		 -Wdeprecated
 
 CPPFLAGS = -lSDL2main -lSDL2
 
