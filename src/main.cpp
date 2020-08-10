@@ -7,13 +7,12 @@
 
 using namespace::std;
 
-Display::Display Instance;
-
+int Display::GetInstance();
 int Display::Execute(int argc, char *argv[]);
 
 int main (int argc, char *argv[]) {
 	
-	Display::Execute(argc, argv);
+	Display::GetInstance()->Execute(argc, argv);
 
 	while(1);
 
