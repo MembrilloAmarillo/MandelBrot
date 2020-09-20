@@ -11,8 +11,8 @@ LFLAGS = -Wno-deprecated-declarations -L/System/Library/Frameworks -framework GL
 XMAND: smandel.o
 	$(CXX) $(CFLAGS) $(LFLAGS) smandel.o
 smandel.o: smandel.cpp 
-	$(CXX) $(CFLAGS) $(LFLAGS) -c smandel.cpp
+	$(CXX) $(CFLAGS) $(LFLAGS) -c smandel.cpp scomplex.cpp scomplex.h
 
 .PHONY: clean
 clean: 
-	rm *.o *.out
+	rm *.o *.out *.gch

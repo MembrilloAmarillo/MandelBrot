@@ -2,12 +2,14 @@
 #include <complex>
 #include <iostream>
 
-#define WIDTH   1000
-#define HEIGHT  1000
+#include "scomplex.h"
+
+#define WIDTH   1440
+#define HEIGHT  1440
 
 #define N       255 //Max RGB value
 
-#define MAX_ITER    700
+#define MAX_ITER    300
 
 void initGL () {
     glClearColor( 0.0f, 0.0f, 0.0f, 1.0f );
@@ -18,20 +20,26 @@ void get_rgb (int n, int *r, int *g, int *b) {
 
     *r = (int)(9*(1-t)*t*t*t*N);
 	*g = (int)(15*(1-t)*(1-t)*t*t*N);
-	*b =  (int)(8.5*(1-t)*(1-t)*(1-t)*t*N);	
+	*b = (int)(8.5*(1-t)*(1-t)*(1-t)*t*N);	
 }
 
 void mandel ( int x, int y, int r, int g, int b ) {
-    std::complex<float> point((float)x/WIDTH-1.5, (float)y/HEIGHT-0.5);
+    std::complex<double> point((double)x/WIDTH-1.5, (double)y/HEIGHT-0.5);
 
-    std::complex<float> z(0,0);
+    std::complex<double> z(0,0);
     unsigned int nb_iter = 0;
     while (abs(z) < 2 && nb_iter <= MAX_ITER) {
         z = z * z + point;
+        /* Solo para motivos de depuracion */
+        // std::cout << "Z value: " << z << std::endl;
         nb_iter++;
     }
-    get_rgb( nb_iter, &r, &g, &b );
-
+    if (nb_iter < MAX_ITER) {
+        get_rgb( (N*nb_iter) / MAX_ITER , &r, &g, &b );
+    }else {
+        get_rgb( nb_iter, &r, &g, &b );
+    }
+    
     glColor3f( r, g, b );
     glVertex2i( x, y );
 }
